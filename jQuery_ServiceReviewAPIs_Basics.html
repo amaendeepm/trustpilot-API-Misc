@@ -1,0 +1,93 @@
+<html>
+
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script>
+
+            var bizUnitID = 'xxx'; //Your Business unit ID at Trustpilot
+            var apiKey = 'xxx'; // Your Trustpilot API Key Here
+
+            //var reqURL = "https://api.trustpilot.com/v1/business-units/"+bizUnitID;
+            var reqURL = "https://api.trustpilot.com/v1/business-units/"+bizUnitID+"/reviews";
+
+            //WE BEGIN WITH ABOVE THREE VARIABLES
+
+            //CASE-1: VALID BIZ UNIT WITH REVIEWS & TRUST SCORE AVAILABLE
+            $.ajax({url: reqURL+"?apikey="+apiKey+"&token="+token,
+            dataType: "json",
+            success: function(json) {
+
+                //console.log("CASE-1: Trust Score: " + json.trustScore);
+                //console.log("CASE-1: Number of Reviews: " + json.numberOfReviews.total);
+
+                //console.log("CASE-1: Overall Response Received: " + JSON.stringify(json));
+                $.each(json, function(key, value) {
+                    console.log("SUCCESS");
+                    console.log("CASE-0:: "+key +" : "+ value);
+                });
+            }, error : function(json) {
+                console.log("CASE-1 ERROR: ######### " + json.responseText);
+                $.each(json, function(key, value) {
+                    console.log("FAILURE");
+                    console.log("CASE-0:: "+key +" : "+ value);
+                });
+            }
+            });
+
+
+            //CASE-2: VALID BIZ UNIT WITH NO REVIEWS & TRUST SCORE AVAILABLE --> IT WILL RETURN TRUST SCORE of 7
+            bizUnitID = "xxx";
+            reqURL = "https://api.trustpilot.com/v1/business-units/"+bizUnitID;
+
+            $.ajax({url: reqURL+"?apikey="+apiKey,
+            dataType: "json",
+            success: function(json) {
+                console.log("CASE-2: Trust Score: " + json.trustScore);
+                console.log("CASE-2: Number of Reviews: " + json.numberOfReviews.total);
+                // If Trust Score 7 & Number of Reviews ZERO, you know now ;-)
+
+                //console.log("CASE-2: Overall Response Received: " + JSON.stringify(json));
+                $.each(json, function(key, value) {
+                    //console.log(key +" : "+ value);
+                });
+            }, error : function(json) {
+                console.log("CASE-2 ERROR: ######### " + json.responseText);
+                $.each(json, function(key, value) {
+                    //console.log("CASE-2:: "+key +" : "+ value);
+                });
+            }
+            });
+
+
+            //CASE-3: INVALID BIZ UNIT WITH OF COURSE NO REVIEWS & TRUST SCORE EXISTING, BUT VALID API KEY!
+            bizUnitID = "xxx";
+            reqURL = "https://api.trustpilot.com/v1/business-units/"+bizUnitID;
+
+            $.ajax({url: reqURL+"?apikey="+apiKey,
+            dataType: "json",
+            success: function(json) {
+                //console.log("Trust Score: " + json.trustScore);
+                //console.log("Number of Reviews: " + json.numberOfReviews);
+                // If Trust Score 7 & Number of Reviews ZERO, you know now ;-)
+
+                console.log("CASE-3: Overall Response Received: " + JSON.stringify(json));
+                $.each(json, function(key, value) {
+                    console.log(key +" : "+ value);
+                });
+            }, error : function(json) {
+                console.log("CASE-3 ERROR: ######### " + JSON.parse(json.responseText).message);
+                $.each(json, function(key, value) {
+                    //console.log("CASE-3:: "+key +" : "+ value);
+                });
+            }
+            });
+
+
+
+
+    </script>
+
+</body>
+
+</html>
