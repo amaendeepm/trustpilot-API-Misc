@@ -1,0 +1,54 @@
+<html>
+
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script>
+
+			function getParameterByName(name, url) {
+				if (!url) url = window.location.href;
+				name = name.replace(/[\[\]]/g, "\\$&");
+				var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+					results = regex.exec(url);
+				if (!results) return null;
+				if (!results[2]) return '';
+				return decodeURIComponent(results[2].replace(/\+/g, " "));
+			}
+
+            var bizUnitID = 'xxx'; // Your BIZUNIT HERE
+            var apiKey = 'xxx'; //Your Trustpilot API Key
+            var sku = getParameterByName('sku'); //Your Product SKU coming from URL request parameter e.g. http://ThisPageURL?sku=YOUR_SKU
+            var reqURL = "https://api.trustpilot.com/v1/product-reviews/business-units/"+bizUnitID+"/reviews";
+            $.ajax({url: reqURL+"?apikey="+apiKey+"&sku="+sku,
+            dataType: "json",
+            success: function(json) {
+
+                console.log("Overall Response Received: ", json.productReviews);
+                var prodR = json.productReviews;
+
+                for (var i = 0; i < prodR.length; i++) {
+				  var html = 'Review Title: ' + prodR[i].content + '<br/>';
+				  html += 'Review Rating: ' + prodR[i].stars + '<br/>';
+				  html += 'Reviewer: ' + prodR[i].consumer.displayName + '<br/>';
+				  html += 'Review Data: ' + prodR[i].createdAt + '<br/>';
+				  $('#prodr').append(html); // TODO: Format this out in any format
+				}
+
+            }, error : function(json) {
+                console.log("CASE-1 ERROR: ######### " + json.responseText);
+                $.each(json, function(key, value) {
+                    console.log("FAILURE");
+                    console.log("CASE-0:: "+key +" : "+ value);
+                });
+            }
+            });
+
+    </script>
+
+<div id="prodr">
+	<!-- Build any Custom Graphic here showing Product Reviews Data -->
+</div>
+
+</body>
+
+</html>
