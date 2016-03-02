@@ -1,0 +1,1 @@
+This REST API Tool was work in progress at Trustpilot conceptualized by my for Sales / Pre-Sales Support in the lines of inspiration from Tradeshift's REST API Explorer (http://developer.tradeshift.com/rest-api/ with downloadable desktop Java Swing)
