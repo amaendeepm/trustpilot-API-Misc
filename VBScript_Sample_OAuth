@@ -1,0 +1,19 @@
+<%
+Dim consumerKey,consumerSecret,myCstr    
+consumerKey = "XXXX"
+consumerSecret = "YYYY"
+EndPoint = "https://api.trustpilot.com/v1/oauth/oauth-business-users-for-applications/accesstoken"
+Payload = "grant_type=password&username=aaa@bbb.com&password=pass28"
+myCstr = Base64_Encode(consumerKey & ":" & consumerSecret)
+myAuth = "Basic "&myCstr
+response.write(Endpoint & "?" & Payload & "<br>")    
+response.write(myAuth)
+Dim xmlhttp 
+Set xmlhttp = server.Createobject("MSXML2.ServerXMLHTTP")
+xmlhttp.Open "POST",EndPoint,false    
+'xmlhttp.setRequestHeader "User-Agent","HTTP/1.1"
+xmlhttp.setRequestHeader "Authorization", myAuth
+xmlhttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+xmlhttp.send(Payload)
+Response.write xmlhttp.responseText
+%>
