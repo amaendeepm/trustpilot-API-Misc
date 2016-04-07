@@ -1,9 +1,5 @@
 package com.trustpilot.support.restclient.app;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,11 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -34,7 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -277,7 +268,13 @@ public class TPRestClient extends JFrame {
 
 
 	public static void main(String[] args) {
-		new TPRestClient();
+		SwingUtilities.invokeLater(new Runnable(){
+
+			public void run() {
+				new TPRestClient();				
+			}
+			
+		});
 	}
 
 }
